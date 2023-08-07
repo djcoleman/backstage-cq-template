@@ -1,0 +1,19 @@
+schemaVersion: 2.2.0
+metadata:
+  name: ${{values.component_id}}
+components:
+  - name: java
+    container:
+      image: registry.access.redhat.com/ubi8/openjdk-17
+      sourceMapping: /projects
+      command: [ "tail", "-f", "/dev/null"]
+
+commands:
+  - id: run-${{values.component_id}}
+    exec:
+      component: java
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: mvn quarkus:dev
+      group:
+        kind: run
+        isDefault: true
